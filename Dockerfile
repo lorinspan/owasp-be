@@ -7,6 +7,7 @@ WORKDIR /app
 # Copiem fișierele Maven și descărcăm dependențele (pentru caching eficient)
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
+RUN chmod +x mvnw  # Adaugă această linie
 RUN ./mvnw dependency:go-offline
 
 # Copiem sursele proiectului
