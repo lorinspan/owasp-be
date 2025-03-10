@@ -39,4 +39,11 @@ public class BACUserController {
         return userService.updateUser(id, user); // ❌ Orice utilizator poate edita orice user
     }
 
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id); // 🚨 Nu verifică permisiunile, oricine poate șterge orice user
+        return ResponseEntity.ok("User deleted successfully!");
+    }
+
+
 }

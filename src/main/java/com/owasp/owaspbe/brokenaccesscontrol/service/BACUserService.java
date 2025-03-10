@@ -29,6 +29,9 @@ public class BACUserService {
         }
     }
 
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id); // 🚨 Nu verifică dacă user-ul e admin sau dacă șterge alt user
+    }
 
     public List<BACUser> getAllUsers() {
         return userRepository.findAll(); // ❌ Orice utilizator poate vedea toți userii
