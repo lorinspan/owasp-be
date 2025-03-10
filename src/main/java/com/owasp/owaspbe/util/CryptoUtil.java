@@ -20,4 +20,8 @@ public class CryptoUtil {
         cipher.init(Cipher.DECRYPT_MODE, keySpec);
         return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedData)));
     }
+
+    public static String getSecretKey() {
+        return SECRET_KEY;
+    }
 }

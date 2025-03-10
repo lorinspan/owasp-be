@@ -2,9 +2,11 @@ package com.owasp.owaspbe.brokenaccesscontrol.controller;
 
 import com.owasp.owaspbe.brokenaccesscontrol.model.BACUser;
 import com.owasp.owaspbe.brokenaccesscontrol.service.BACUserService;
+import com.owasp.owaspbe.util.CryptoUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +45,16 @@ public class BACUserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id); // 🚨 Nu verifică permisiunile, oricine poate șterge orice user
         return ResponseEntity.ok("User deleted successfully!");
+    }
+
+    @GetMapping("/admin/config")
+    public Map<String, String> getAdminConfig() {
+        Map<String, String> config = new HashMap<>();
+        config.put("debug", "true"); // ❌ Debug activ
+        config.put("logLevel", "TRACE"); // ❌ Nivelul logurilor este periculos
+        config.put("encryptionKey", CryptoUtil.getSecretKey()); // ❌ Cheie hardcodată
+        config.put("databaseUrl", "jdbc:postgresql://localhost:5432/owasp"); // ❌ Expune conexiunea la DB
+        return config; // ✅ Oricine poate accesa aceste date critice
     }
 
 
