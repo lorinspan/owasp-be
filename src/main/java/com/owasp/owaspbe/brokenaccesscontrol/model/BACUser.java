@@ -10,7 +10,7 @@ public class BACUser {
     private Long id;
 
     private String username;
-    private String password;
+    private String password; // Stocarea parolelor fără hashing ❌ Parola nu e protejată prin hashing
     private String role; // "user" sau "admin"
 
     public BACUser() {}
