@@ -1,10 +1,10 @@
-# Folosim o imagine oficială OpenJDK pentru a rula aplicația Spring Boot
+# Folosim o imagine oficiala OpenJDK pentru a rula aplicatia Spring Boot
 FROM openjdk:21-jdk-slim
 
-# Setăm directorul de lucru în container
+# Setam directorul de lucru in container
 WORKDIR /app
 
-# Copiem fișierele Maven și descărcăm dependențele (pentru caching eficient)
+# Copiem fisierele Maven si descarcam dependentele
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
 RUN chmod +x mvnw  # Adaugă această linie
@@ -13,11 +13,11 @@ RUN ./mvnw dependency:go-offline
 # Copiem sursele proiectului
 COPY src ./src
 
-# Construim aplicația
+# Construim aplicatia
 RUN ./mvnw package -DskipTests
 
-# Setăm portul pe care rulează aplicația
+# Setam portul pe care ruleaza aplicatia
 EXPOSE 8080
 
-# Comanda pentru a rula aplicația
+# Comanda pentru a rula aplicatia
 CMD ["java", "-jar", "target/owasp-be-0.0.1-SNAPSHOT.war"]
