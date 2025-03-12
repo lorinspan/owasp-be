@@ -1,17 +1,22 @@
 package com.owasp.owaspbe.brokenaccesscontrol.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "bac_users")
 public class BACUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
-    private String password; // Stocarea parolelor fără hashing ❌ Parola nu e protejată prin hashing
-    private String role; // "user" sau "admin"
+    private String password; // Stocarea parolelor fara hashing
+    private String role;
 
     public BACUser() {}
 

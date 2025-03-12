@@ -23,18 +23,18 @@ public class BACUserService {
         Optional<BACUser> user = userRepository.findByUsername(username);
 
         if (user.isPresent() && user.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(user.get()); // ✅ 200 OK dacă autentificarea reușește
+            return ResponseEntity.ok(user.get());
         } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password"); // ❌ 401 Unauthorized dacă autentificarea eșuează
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
         }
     }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id); // 🚨 Nu verifică dacă user-ul e admin sau dacă șterge alt user
+    public void deleteUser(Long id) { // Nu verifica daca user-ul e admin cand sterge alt user
+        userRepository.deleteById(id);
     }
 
-    public List<BACUser> getAllUsers() {
-        return userRepository.findAll(); // ❌ Orice utilizator poate vedea toți userii
+    public List<BACUser> getAllUsers() { // Orice utilizator poate vedea toti userii
+        return userRepository.findAll();
     }
 
     public BACUser getUserById(Long id) {
@@ -46,7 +46,7 @@ public class BACUserService {
         BACUser user = userRepository.findById(id).orElseThrow();
         user.setUsername(updatedUser.getUsername());
         user.setPassword(updatedUser.getPassword());
-        user.setRole(updatedUser.getRole()); // ❌ Permite schimbarea propriului rol!
+        user.setRole(updatedUser.getRole()); // Permite schimbarea propriului rol
         return userRepository.save(user);
     }
 }

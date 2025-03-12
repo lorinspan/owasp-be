@@ -10,19 +10,19 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/files")
-@CrossOrigin("*") // ❌ Permite orice origine (vulnerabil)
+@CrossOrigin("*") // Oricine poate accesa API-ul din orice origine
 public class FileReadController {
 
-    private static final String BASE_PATH = "src/main/resources/recipes/"; // 📁 Folderul implicit
+    private static final String BASE_PATH = "src/main/resources/recipes/";
 
     @PostMapping("/read")
     public ResponseEntity<Map<String, String>> readFile(@RequestBody FileRequest request) {
         try {
-            String filePath = BASE_PATH + request.getPath(); // ❌ NU EXISTĂ VALIDARE!
-            String content = Files.readString(Paths.get(filePath)); // 🔥 Citește orice fișier
+            String filePath = BASE_PATH + request.getPath(); // Nu exista validare
+            String content = Files.readString(Paths.get(filePath)); // Citeste orice fișier
             return ResponseEntity.ok(Map.of("message", content));
         } catch (IOException e) {
-            return ResponseEntity.badRequest().body(Map.of("message", "❌ Error reading file!"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Error reading file!"));
         }
     }
 

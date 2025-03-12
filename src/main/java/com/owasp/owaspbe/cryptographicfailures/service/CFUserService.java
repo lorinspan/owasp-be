@@ -15,8 +15,8 @@ public class CFUserService {
         this.userRepository = userRepository;
     }
 
-    public CFUser registerUser(String username, String password, String email) {
-        String hashedPassword = hashPassword(password); // ❌ Folosim MD5 fără salting
+    public CFUser registerUser(String username, String password, String email) { // Folosim MD5 fara salting
+        String hashedPassword = hashPassword(password);
         CFUser user = new CFUser(username, hashedPassword, email);
         return userRepository.save(user);
     }
@@ -27,17 +27,17 @@ public class CFUserService {
         return user.orElse(null);
     }
 
-    public CFUser updateEmail(Long id, String newEmail) {
+    public CFUser updateEmail(Long id, String newEmail) { // Nu verificam daca userul are permisiuni!
         Optional<CFUser> user = userRepository.findById(id);
         if (user.isPresent()) {
             CFUser existingUser = user.get();
             existingUser.setEmail(newEmail);
-            return userRepository.save(existingUser); // ❌ Nu verificăm dacă userul are permisiuni!
+            return userRepository.save(existingUser);
         }
         return null;
     }
 
-    public String hashPassword(String password) {
-        return DigestUtils.md5Hex(password); // ❌ Vulnerabil la rainbow table attacks
+    public String hashPassword(String password) { // Vulnerabil la rainbow table attacks
+        return DigestUtils.md5Hex(password);
     }
 }

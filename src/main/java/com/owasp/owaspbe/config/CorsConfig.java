@@ -14,10 +14,10 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // ❌ Permite ORICE site să trimită request-uri (total nesecurizat)
+        configuration.setAllowedOrigins(List.of("*")); // Permite ORICE site sa trimita request-uri
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true); // ❌ Permite trimiterea de cookies/session
+        configuration.setAllowCredentials(true); // Permite trimiterea de cookies/session
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

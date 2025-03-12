@@ -16,8 +16,7 @@ public class BrokenAuthenticationAuthService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Map<String, Object> validateUser(String username, String password) {
-        // ❌ SQL Injection Vulnerabil
+    public Map<String, Object> validateUser(String username, String password) { // Vulnerabil la SQL Injection
         String sql = "SELECT * FROM ba_users WHERE username = '" + username + "' AND password = '" + password + "'";
         List<Map<String, Object>> results = jdbcTemplate.queryForList(sql);
 
@@ -27,7 +26,7 @@ public class BrokenAuthenticationAuthService {
             response.put("status", "success");
             response.put("userId", user.get("id"));
             response.put("username", user.get("username"));
-            response.put("token", "insecure-token-" + user.get("id")); // ❌ Token nesecurizat
+            response.put("token", "insecure-token-" + user.get("id")); // Token nesecurizat
             return response;
         } else {
             return Map.of("status", "failed");

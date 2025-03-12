@@ -17,7 +17,7 @@ public class CFUser {
     private String username;
 
     @Column(nullable = false)
-    private String password; // ❌ Stocăm parola hashuită cu MD5
+    private String password; // Stocăm parola hashuita cu MD5
 
     @Column(nullable = false)
     private String email;
@@ -29,6 +29,4 @@ public class CFUser {
         this.password = password;
         this.email = email;
     }
-
-    // Getters și setters
 }

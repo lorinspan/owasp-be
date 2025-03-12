@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bac")
-@CrossOrigin("*") // ❌ Oricine poate accesa API-ul din orice origine
+@CrossOrigin("*") // Oricine poate accesa API-ul din orice origine
 public class BACUserController {
 
     private final BACUserService userService;
@@ -27,34 +27,34 @@ public class BACUserController {
     }
 
     @GetMapping("/users")
-    public List<BACUser> getAllUsers() {
-        return userService.getAllUsers(); // ❌ Orice utilizator poate accesa această listă
+    public List<BACUser> getAllUsers() { // Orice utilizator poate accesa aceasta lista
+        return userService.getAllUsers();
     }
 
     @GetMapping("/users/{id}")
-    public BACUser getUserById(@PathVariable Long id) {
-        return userService.getUserById(id); // ✅ Oricine poate accesa orice user!
+    public BACUser getUserById(@PathVariable Long id) { // Oricine poate accesa orice user
+        return userService.getUserById(id);
     }
 
     @PutMapping("/users/{id}")
-    public BACUser updateUser(@PathVariable Long id, @RequestBody BACUser user) {
-        return userService.updateUser(id, user); // ❌ Orice utilizator poate edita orice user
+    public BACUser updateUser(@PathVariable Long id, @RequestBody BACUser user) { // Orice utilizator poate edita orice user
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id); // 🚨 Nu verifică permisiunile, oricine poate șterge orice user
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) { // Nu verifica permisiunile, oricine poate sterge orice user
+        userService.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully!");
     }
 
     @GetMapping("/admin/config")
-    public Map<String, String> getAdminConfig() {
+    public Map<String, String> getAdminConfig() { // Oricine poate primi datele critice ale proiectului / mediului
         Map<String, String> config = new HashMap<>();
-        config.put("debug", "true"); // ❌ Debug activ
-        config.put("logLevel", "TRACE"); // ❌ Nivelul logurilor este periculos
-        config.put("encryptionKey", CryptoUtil.getSecretKey()); // ❌ Cheie hardcodată
-        config.put("databaseUrl", "jdbc:postgresql://localhost:5432/owasp"); // ❌ Expune conexiunea la DB
-        return config; // ✅ Oricine poate accesa aceste date critice
+        config.put("debug", "true");
+        config.put("logLevel", "TRACE");
+        config.put("encryptionKey", CryptoUtil.getSecretKey());
+        config.put("databaseUrl", "jdbc:postgresql://localhost:5432/owasp");
+        return config;
     }
 
 

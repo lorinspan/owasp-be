@@ -1,13 +1,17 @@
 package com.owasp.owaspbe.brokenauthentication.controller;
 
 import com.owasp.owaspbe.brokenauthentication.service.BrokenAuthenticationAuthService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ba-auth")
-@CrossOrigin("*") // ❌ Permite orice origine, vulnerabil la CORS
+@CrossOrigin("*") // Oricine poate accesa API-ul din orice origine
 public class BrokenAuthenticationAuthController {
 
     private final BrokenAuthenticationAuthService authService;

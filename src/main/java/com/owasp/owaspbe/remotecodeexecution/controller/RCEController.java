@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/system")
-@CrossOrigin("*") // ❌ Oricine poate accesa API-ul de oriunde
+@CrossOrigin("*") // Oricine poate accesa API-ul din orice origine
 public class RCEController {
 
     @PostMapping("/execute")
@@ -22,7 +22,7 @@ public class RCEController {
         Map<String, String> response = new HashMap<>();
 
         try {
-            Process process = Runtime.getRuntime().exec(command); // ❌ Execută orice comandă, fără protecție!
+            Process process = Runtime.getRuntime().exec(command); // Executa orice comanda, fara protectie
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             StringBuilder output = new StringBuilder();

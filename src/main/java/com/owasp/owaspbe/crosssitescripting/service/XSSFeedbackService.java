@@ -15,14 +15,12 @@ public class XSSFeedbackService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // ✅ Salvăm input-ul utilizatorului fără filtrare -> STORABLE XSS
-    public void saveFeedback(String name, String message) {
+    public void saveFeedback(String name, String message) { // Salvam input-ul utilizatorului fara filtrare
         String sql = "INSERT INTO feedback (name, message) VALUES (?, ?)";
         jdbcTemplate.update(sql, name, message);
     }
 
-    // ✅ Returnăm datele direct fără protecție XSS
-    public List<Map<String, Object>> getAllFeedback() {
+    public List<Map<String, Object>> getAllFeedback() { // Returnam datele direct fara protectie XSS
         return jdbcTemplate.queryForList("SELECT name, message FROM feedback");
     }
 }

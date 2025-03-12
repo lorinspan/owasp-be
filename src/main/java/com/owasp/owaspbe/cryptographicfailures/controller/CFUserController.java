@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("*") // ❌ Oricine poate accesa API-ul din orice origine
+@CrossOrigin("*") // Oricine poate accesa API-ul din orice origine
 @RequestMapping("/api/cf")
 public class CFUserController {
     private final CFUserService userService;
@@ -24,17 +24,16 @@ public class CFUserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CFUser> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<CFUser> login(@RequestBody Map<String, String> request) { // Nu avem nicio masura de protectie impotriva brute-force
         CFUser user = userService.authenticate(request.get("username"), request.get("password"));
         if (user != null) {
             return ResponseEntity.ok(user);
         }
-        return ResponseEntity.status(401).build(); // ❌ Nu avem nicio măsură de protecție împotriva brute-force
+        return ResponseEntity.status(401).build();
     }
 
-    // ❌ Endpoint vulnerabil: Oricine poate schimba email-ul oricărui utilizator
     @PutMapping("/users/{id}/email")
-    public ResponseEntity<CFUser> updateEmail(@PathVariable Long id, @RequestBody Map<String, String> request) {
+    public ResponseEntity<CFUser> updateEmail(@PathVariable Long id, @RequestBody Map<String, String> request) { // Endpoint vulnerabil: Oricine poate schimba email-ul oricarui utilizator
         CFUser updatedUser = userService.updateEmail(id, request.get("email"));
         return ResponseEntity.ok(updatedUser);
     }

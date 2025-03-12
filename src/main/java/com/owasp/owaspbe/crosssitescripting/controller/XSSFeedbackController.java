@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/feedback")
-@CrossOrigin("*") // Permite orice origine (vulnerabil la atacuri CORS)
+@CrossOrigin("*") // Oricine poate accesa API-ul din orice origine
 public class XSSFeedbackController {
 
     private final XSSFeedbackService feedbackService;
@@ -17,21 +17,18 @@ public class XSSFeedbackController {
         this.feedbackService = feedbackService;
     }
 
-    // ✅ Endpoint vulnerabil la Stored XSS
     @PostMapping("/submit")
-    public Map<String, String> submitFeedback(@RequestBody Map<String, String> request) {
+    public Map<String, String> submitFeedback(@RequestBody Map<String, String> request) { // Endpoint vulnerabil la Stored XSS
         String name = request.get("name");
         String message = request.get("message");
         feedbackService.saveFeedback(name, message);
 
-        // Returnăm un JSON valid
         return Map.of("message", "Feedback submitted successfully!");
     }
 
 
-    // ✅ Endpoint care expune XSS - afișează mesajele nesecurizate
     @GetMapping("/list")
-    public List<Map<String, Object>> getFeedback() {
+    public List<Map<String, Object>> getFeedback() { // Endpoint care expune XSS - afiseaza mesajele nesecurizate
         return feedbackService.getAllFeedback();
     }
 }
